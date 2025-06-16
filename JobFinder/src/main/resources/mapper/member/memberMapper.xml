@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.joblessfriend.jobfinder.member.domain">
+	
+		<resultMap type="memberVo" id="memberResultMap">
+			<id column="MEMBER_ID" property="memberId"/>
+			<result column="EMAIL" property="email" />
+			<result column="PASSWORD" property="password" />
+			<result column="NICKNAME" property="nickname" />
+			<result column="RESUME_MAX" property="resumeMax" />
+			<result column="CREATE_AT" property="createAt" />
+			<result column="MODIFIED_AT" property="modifiedAt" />
+			<result column="PROVIDER" property="provider" />
+		</resultMap>
+		
+		<select id="memberExist" parameterType="map"
+		resultMap="memberResultMap">
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+			FROM MEMBER
+			WHERE EMAIL = #{email, jdbcType=VARCHAR}
+			AND PASSWORD = #{password, jdbcType=VARCHAR}
+		</select>
+		
+		<insert id="memberInsertOne" parameterType="memberVo">
+			INSERT INTO MEMBER
+			(MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER)
+			VALUES(MEMBER_ID_SEQ.NEXTVAL, #{email}, #{password},#{nickname},5, SYSDATE, SYSDATE,
+		    <if test="provider != null">
+		      #{provider}
+		    </if>
+		    <if test="provider == null">
+		      'normal'
+		    </if>
+			)
+		</insert>
+		
+		<select id="isNicknameExists"  parameterType="String" resultType="String">
+			SELECT NICKNAME FROM MEMBER WHERE NICKNAME = #{nickname}
+		</select>
+		
+		<select id="memberEmailExist" parameterType="String" resultMap="memberResultMap">
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+			FROM MEMBER WHERE EMAIL = #{email}
+		</select>
+
+
+		
+
+
+		<delete id="memberDeleteOne">
+			DELETE MEMBER
+			WHERE MEMBER_ID = #{memberId}
+		</delete>
+		
+
+		
+		<update id="updatePassword" parameterType="map">
+			UPDATE MEMBER
+			SET PASSWORD = #{password}
+			WHERE MEMBER_ID = #{memberId}
+		</update>
+		
+		<select id="googleMemberExist" parameterType="string"
+			resultMap="memberResultMap">
+			SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+			FROM MEMBER
+			WHERE EMAIL = #{email}
+		</select>
+		
+		<update id="updateNickname" parameterType="map">
+			UPDATE MEMBER
+			SET NICKNAME = #{nickname}
+			WHERE MEMBER_ID = #{memberId}
+		</update>
+		
+		<!-- 1. MemberDao에 이메일 기반 사용자 조회 -->
+		<select id="selectByEmail" parameterType="string" resultMap="memberResultMap">
+		    SELECT MEMBER_ID, EMAIL, PASSWORD, NICKNAME, RESUME_MAX, CREATE_AT, MODIFIED_AT, PROVIDER
+		    FROM MEMBER
+		    WHERE EMAIL = #{email}
+		</select>
+	</mapper>
+	
+	

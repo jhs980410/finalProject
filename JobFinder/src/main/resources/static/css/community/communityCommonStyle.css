@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.boxStyle{
+		border: 1px solid #D1D5E3;
+		border-radius: 5px;	
+		background-color: white;
+	}
+.inputBtn{
+	background-color: #F69800;
+	border-radius: 5px;
+  	border: 0;	
+  	color: white;
+}
+
+.wrap{
+	width: 1210px;
+	margin: auto;
+}
+	
+#infoContent{
+	margin-bottom: 0px;
+	display: flex;
+
+}
+
+a{
+	cursor: pointer;
+	color: #6D707B;
+}
+
+button{
+	cursor: pointer;
+	
+}
+
+.moveTo{
+	margin: 10px 0px 20px 0px;
+	display: flex;
+	gap: 15px;
+	font-size: 20px;
+	
+	text-align: center;
+	
+	cursor: pointer;
+	
+}
+
+.selectedPage{
+	font-weight: bold;
+	color: #F69800;
+/* 	background: #fff3e0;
+	 */
+}
+.switchNotiComm{
+	width: 250px;
+	display: flex;
+	gap: 15px; 
+	margin-top: 10px; 
+	justify-content: center;
+	cursor: pointer;
+	
+}

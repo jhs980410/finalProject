@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.skill.dao.SkillDao">
+
+    <select id="tagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        select
+            jp.job_group_id AS jobGroupId,
+            t.tag_id AS tagId,
+            t.tag_name AS tagName,
+            t.create_at AS createDate,
+            t.modified_at AS modifiedDate
+
+        from job_group jp join tag t
+                               on jp.job_group_id = t.job_group_id
+        where jp.job_group_id = #{jobGroupId}
+
+    </select>
+
+    <select id="postTagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            t.TAG_ID AS tagId,
+            t.TAG_NAME AS tagName
+        FROM JOB_POST_TAG jpt
+                 JOIN TAG t ON jpt.TAG_ID = t.TAG_ID
+        WHERE jpt.JOB_POST = #{jobPostId}
+
+
+    </select>
+    
+    <select id="resumeTagList" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            RT.RESUME_TAG_ID AS resumeTag,
+		    T.TAG_ID AS tagId,
+		    T.TAG_NAME AS tagName
+        FROM RESUME_TAG RT JOIN TAG T
+        ON RT.TAG_ID = T.TAG_ID
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <select id="getSkillsByKeyword" parameterType="String" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+        SELECT
+            T.TAG_ID AS tagId,
+            T.TAG_NAME AS tagName,
+            T.JOB_GROUP_ID AS jobGroupId
+        FROM TAG T
+        WHERE UPPER(T.TAG_NAME) LIKE UPPER('%' || #{keyword} || '%')
+        ORDER BY T.TAG_NAME
+    </select>
+    
+    <select id="getSkillById" parameterType="int" resultType="com.joblessfriend.jobfinder.skill.domain.SkillVo">
+	    SELECT 
+		    TAG_ID AS tagId,
+		    TAG_NAME AS tagName,
+		    CREATE_AT AS createDate,
+		    MODIFIED_AT AS modifiedDate
+	    FROM TAG
+	    WHERE TAG_ID = #{tagId}
+	</select>
+
+</mapper>

@@ -1,0 +1,498 @@
+/* body { */
+/*     font-family: Arial, sans-serif; */
+		/*	 폰트가 달라서 어긋났던 것	*/
+/*     margin: 0; */
+/*     padding: 0; */
+/* } */
+
+/* #container { */
+/*     width: 80%; */
+/*     margin: auto; */
+/* } */
+
+#containerWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* (1) Search Section 상단 검색조건 박스 */
+#searchSection {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid lightgray;
+    padding: 20px;
+    border-radius: 5px;
+/*     box-shadow: 0 0 8px rgba(0, 0, 0, 0.05); */
+    gap: 10px;
+    min-height: 290px;
+}
+
+#filters {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 120px;
+    text-align: left;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 100;
+    min-width: 200px;
+    max-height: 250px;
+    overflow: auto;
+}
+
+/* (2) 적용, 초기화 버튼 */
+#filterActions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+#filterActions button {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* (3) 공고 리스트 부분 */
+#jobListings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.job {
+	height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+/*     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); */
+    cursor: pointer;
+}
+.job:hover {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+.company-name {
+    width: 130px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.job-info {
+    flex: 1;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.job-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+}
+
+.job-title .star {
+    color: #f4b400;
+    margin-left: 5px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 14px;
+    color: #555;
+}
+
+.job-meta-skill {
+    flex-basis: 100%;
+/*     margin-top: 6px; */
+    font-size: 14px;
+    color: #555;
+    
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* 태그 스타일 */
+.job-meta-skill div{
+	
+	/* 	스타일 1 */
+	border: 1px solid #F69800;
+	background-color: rgb(255, 249, 238);
+	color:  #f68300;
+
+	/* 	스타일 2 */
+/* 	background-color: #F69800; */
+/* 	color: white; */
+	
+	border-radius: 15px;
+	padding: 3px 10px;
+}
+
+.job-action {
+    text-align: right;
+    min-width: 120px;
+    flex-shrink: 0;
+}
+
+.job-action button {
+	width: 100px;
+    background-color: #F69800;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 6px;
+}
+
+.job-action .deadline {
+    font-size: 13px;
+    color: #666;
+}
+
+.job-group-list {
+    flex: 1;
+    width: 500px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 30px;
+}
+
+/* 오른쪽 리스트 */
+.job-list {
+    flex: 2;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-left: 10px;
+}
+.job-group {
+
+    padding: 5px;
+    cursor: pointer;
+}
+
+.job-group:hover {
+    background-color: #FFF3D6; /* 밝은 회색 배경 */
+    color: #FF6600 ; /* 글자색 살짝 진하게 */
+}
+
+.job-group.selected {
+    background-color: #FFF3D6; /* 연한 주황색 추천 */
+    color: #FF6600 ;
+}
+
+#jobList ,.skillList{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 체크박스 간격 */
+    margin-top: 10px;
+}
+
+#jobList label ,.skillList{
+    width: 45%; /* 한 줄에 2개 꽉 차게 */
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+h2 {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+/*경력관련css */
+.education-dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding: 8px;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.education-dropdown-content label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/*체크박스 모든css */
+.dropdown-content,.job-list ,.education-dropdown-content input[type="checkbox"]:checked {
+    accent-color: #f8a325;
+}
+.apply-btn:hover {
+    background-color: white;
+    color: #f68300;
+	outline: 1px solid #F69800;
+/*    찬정님이 보시면 수정좀ㅋㅋ*/
+}
+.apply-btn[disabled]:hover{
+	outline: none;
+	color: #999;
+}
+
+
+
+/* 유효성검사 토스트 팝업 */
+#askConfirm {
+    position: fixed;
+    opacity: 0%;
+    /* 	    bottom: -50px; */
+    top: -50px;
+
+    left: 50%;
+    transform: translate(-50%,0);
+    padding: 10px 50px;
+    background: rgba(246, 152, 0, 0.70);
+    border-radius: 100px;
+    color: #fff;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+}
+/*토스트 메시지 활성화 되었을 때*/
+#askConfirm.active {
+    opacity: 100%;
+    /* 	    bottom: 50px; */
+    top: 30px;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;     /* 세로 정렬 (필요시) */
+    flex-direction: row;     /* 버튼들을 가로로 나열 */
+    width: 100%;             /* 중앙 정렬 위해 전체 너비 사용 */
+}
+
+.page-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: none;
+    outline: 1px solid #ccc;
+    color: #333;
+    padding: 6px 12px;
+    margin: 0 2px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.page-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.page-btn.active {
+    color: #F69800;
+    font-weight: bold;
+    border: none;
+    outline: 1px solid #F69800;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.apply-btn[disabled] {
+     background-color: #e0e0e0;
+     color: #999;
+     border: 1px solid #ccc;
+     cursor: not-allowed;
+ }
+
+
+
+/* SweetAlert2 커스텀 모달 전체 */
+.swal2-popup.resume-modal {
+    padding: 30px 40px;
+    font-size: 15px;
+}
+
+/* 이력서 리스트 전체 영역 (스크롤 포함) */
+.resume-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+/* 각 이력서 항목 */
+.resume-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.resume-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* 라디오 + 텍스트 정렬 */
+.resume-radio-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.resume-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.resume-match {
+    font-weight: bold;
+    color: #0B9E43; /* 초록색 */
+    white-space: nowrap;
+}
+/* 이력서 제목 (굵게) */
+.resume-item .resume-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+/* 이력서 작성일 등 부가정보 */
+.resume-item .resume-meta {
+    font-size: 13px;
+    color: #666;
+}
+
+/* 라디오 버튼 간격 조정 */
+.resume-item input[type="radio"] {
+    margin-right: 8px;
+}
+
+
+/* 찜 추가기능 */
+.star{
+	border: 0px;
+	outline: 0px;
+}
+
+.noStar{
+	border: 0px;
+	outline: 0px;
+}
+
+/* 선택된 필터들 표시 영역 */
+#selectedFilters {
+/*     margin-top: 15px; */
+	margin-left: 5px;
+}
+
+.filter-section-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+#divSelectedCon, #divSelectedCareer, #divSelectedEducation, #divSelectedSkills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+/*     margin-top: 5px; */
+/*     margin-bottom: 10px; */
+	margin: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+#divSelectedCon li, #divSelectedCareer li, #divSelectedEducation li, #divSelectedSkills li {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4f8;
+    border: 1px solid #d0d7de;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+#divSelectedCon li em, #divSelectedCareer li em, #divSelectedEducation li em, #divSelectedSkills li em {
+    margin-right: 6px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.shb-btn-del {
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+}
+
+.shb-btn-del:hover {
+    color: #e74c3c;
+}
+
+#selectedCareer, #selectedEducation, #selectedSkills, #searchJobGroup  {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* 간격 조절 */
+  margin-top: 5px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  min-height: 34px; /* 높이 조절 */
+}
+
+.filter-section-title {
+  height: 32px; /* 필요 시 지정 */
+  display: flex;
+  align-items: center; /* 텍스트 수직 정렬 */
+  white-space: nowrap;
+  font-weight: bold;
+}

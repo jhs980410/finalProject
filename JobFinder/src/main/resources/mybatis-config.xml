@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 없으면안됨 현재 패키지 네임 자체가 없으면 mybatis에서 풀네임으로 적어야함 -->
+    <typeAliases>
+<!--&lt;!&ndash;      예시  <package name="com.edu.member.domain"/>&ndash;&gt;-->
+ 		 <package name="com.joblessfriend.jobfinder.admin.domain"/>
+<!--		 <package name="com.joblessfriend.jobfinder.company.domain"/>-->
+<!--        -->
+		<package name="com.joblessfriend.jobfinder.member.domain"/>
+		<package name="com.joblessfriend.jobfinder.community.domain"/>
+		<!-- <package name="com.joblessfriend.jobfinder.jobGroup.domain"/> -->
+    </typeAliases>
+
+    <mappers>
+<!--    예시    <mapper resource="mappers/member/MemberMapper.xml"/>-->
+<!--		 <mapper resource="mapper/admin/adminMapper"/>-->
+<!--		 <mapper resource="mapper/company/companyMapper"/>  -->
+<!--		<mapper resource="mapper/community/communityMapper.xml"/>-->
+    </mappers>
+</configuration>

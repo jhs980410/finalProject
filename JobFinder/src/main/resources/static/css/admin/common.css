@@ -1,0 +1,34 @@
+
+
+
+
+#container {
+	width: 800px;
+	margin: auto;
+}
+
+#pageNation {
+	margin: auto;
+}
+
+/* #searchContainer{
+	text-align: center;
+} */
+
+td{
+	max-width: 400px;
+	overflow: hidden;
+	white-space: normal;
+	text-overflow: ellipsis;	
+	
+}
+
+td{
+	text-align: center;
+	
+}
+
+a{
+	text-decoration: none;
+    color: #000;
+}

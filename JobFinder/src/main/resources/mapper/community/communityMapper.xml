@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joblessfriend.jobfinder.community">
+
+	<resultMap type="CommunityVo" id="communityResultVo">
+		<id column="COMMUNITY_ID" property="communityId" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="NICKNAME" property="nickname" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENT" property="content" />
+		<result column="CREATE_AT" property="createAt"
+			javaType="java.util.Date" />
+		<result column="MODIFIED_AT" property="modifiedAt"
+			javaType="java.util.Date" />
+		<result column="VIEWS" property="views" />
+	</resultMap>
+	
+	<!--커뮤니티|칼럼 : 게시글 작성-->	
+	<insert id="communityInsertOne" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
+		INSERT INTO COMMUNITY (COMMUNITY_ID, MEMBER_ID, TITLE, CONTENT, CREATE_AT, MODIFIED_AT, VIEWS)
+		VALUES(#{communityId}, #{memberId}, #{title}, #{content}, SYSDATE, NULL, 0)
+	</insert>
+	
+	<select id="communitySelectList" parameterType="com.joblessfriend.jobfinder.util.SearchVo" resultMap="communityResultVo">
+		<![CDATA[
+			SELECT *
+			FROM (SELECT INNER_QUERY.*, ROWNUM AS rnum
+			        FROM (SELECT COMM.COMMUNITY_ID, COMM.MEMBER_ID, COMM.TITLE, COMM.CONTENT, COMM.CREATE_AT, COMM.MODIFIED_AT, COMM.VIEWS, MEM.NICKNAME
+			                FROM COMMUNITY COMM INNER JOIN MEMBER MEM
+							ON COMM.MEMBER_ID = MEM.MEMBER_ID
+			                WHERE 1=1
+		]]>
+			<if test="keyword != null or keyword != ''">
+               		 AND (COMM.TITLE LIKE '%' || #{keyword} || '%'
+                     OR COMM.CONTENT LIKE '%' || #{keyword} || '%')
+            </if>
+        <![CDATA[
+			                ORDER BY COMMUNITY_ID DESC) INNER_QUERY 
+			        WHERE ROWNUM <= #{endRow}
+			    )
+			WHERE rnum >= #{startRow}
+		]]>
+	</select>
+	
+	<select id="communitySelectOne" parameterType="int" resultMap="communityResultVo">
+			SELECT COMM.COMMUNITY_ID, COMM.MEMBER_ID, COMM.TITLE, COMM.CONTENT, COMM.CREATE_AT, COMM.MODIFIED_AT, COMM.VIEWS, MEM.NICKNAME
+			FROM COMMUNITY COMM INNER JOIN MEMBER MEM
+			ON COMM.MEMBER_ID = MEM.MEMBER_ID
+			WHERE COMM.COMMUNITY_ID = #{communityId}
+	</select>
+	
+	<update id="communityUpdate" parameterType="com.joblessfriend.jobfinder.community.domain.CommunityVo" keyProperty="communityId">
+			UPDATE COMMUNITY SET TITLE = #{title}, CONTENT = #{content} , MODIFIED_AT = SYSDATE
+			WHERE COMMUNITY_ID = #{communityId}
+	</update>
+	
+	<delete id="communityDelete" parameterType="int">
+
+		DELETE FROM COMMUNITY
+		WHERE COMMUNITY_ID = #{communityId}
+		
+	</delete>
+	
+	<!-- 파일 저장(게시물 생성 시 사용) -->
+	<insert id="communityFileInsert" parameterType="map">
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{COMMUNITYID}, #{FILENAME}, #{STOREDFILENAME}, #{FILESIZE}, SYSDATE, NULL, #{FILEEXTENSION}, #{FILELINK})
+	</insert>
+	
+		<!-- 파일 저장(게시물수정 시 사용)-수정날짜 존재 -->
+	<insert id="communityFileNewInsert" parameterType="map">
+		INSERT INTO COMMUNITY_FILE (COMMUNITY_FILE_ID, COMMUNITY_ID, FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CREATE_AT, MODIFIED_AT, FILE_EXTENSION, FILE_LINK)
+		VALUES(COMMUNITY_FILE_ID_SEQ.NEXTVAL, #{COMMUNITYID}, #{FILENAME}, #{STOREDFILENAME}, #{FILESIZE}, NULL, SYSDATE, #{FILEEXTENSION}, #{FILELINK})
+	</insert>
+	
+	<!-- 파일 삭제(업데이트 시 사용) -->
+	<delete id="communityFileDelete" parameterType="int">
+		DELETE FROM COMMUNITY_FILE
+		WHERE COMMUNITY_ID = #{communityId}
+	</delete>
+	
+	<!-- 파일 찾기(업데이트 시 리스트 저장 사용) -->
+	<select id="communityFileList" parameterType="int" resultType="map">
+		SELECT COMMUNITY_FILE_ID AS communityFileID, COMMUNITY_ID AS communityId, FILE_NAME AS fileName, STORED_FILE_NAME AS storedFileName, 
+			FILE_SIZE AS fileSize, CREATE_AT AS createAt, MODIFIED_AT AS modifiedAt, FILE_EXTENSION AS fileExtension, FILE_LINK AS fileLink
+		FROM COMMUNITY_FILE
+		WHERE COMMUNITY_ID = #{communityId}
+	</select>
+	
+	
+	<!-- 파일 저장용 시퀀스 넘버 -->
+	<select id="communitySeqNum" resultType="int">
+		 SELECT COMMUNITY_ID_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	
+	<!-- 페이지네이션 -->
+	<select id="getCommunityTotalCount" resultType="int" parameterType="com.joblessfriend.jobfinder.util.SearchVo">
+        SELECT COUNT(*)
+        FROM COMMUNITY
+        <if test="keyword != null or keyword != ''">
+	     	where (TITLE LIKE '%' || #{keyword} || '%'
+	        OR CONTENT LIKE '%' || #{keyword} || '%')
+         </if>
+    </select>
+    
+    <update id="communityViewCount">
+   		UPDATE COMMUNITY SET VIEWS=#{views}
+		WHERE COMMUNITY_ID = #{communityId}
+    </update>
+	
+
+</mapper>

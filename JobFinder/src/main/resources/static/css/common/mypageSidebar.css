@@ -1,0 +1,58 @@
+/* 사이드바 */
+.sidebar {
+	width: 180px;
+	height: 230px;
+	border: 1px solid #D8D9E3;
+	border-radius: 5px;
+}
+
+.sidebar h2 {
+	font-size: 20px;
+	font-weight: bold;
+	color: #1B202F;
+	border-bottom: 1px solid #D8D9E3;
+	margin: 0px auto;
+	padding: 15px 30px;
+}
+
+.sidebar h2 a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.sidebar ul {
+	list-style: none;
+	margin: 0;
+	padding: 20px 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.sidebar li {
+	font-size: 15px;
+	color: #1B202F;
+}
+
+.sidebar li a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.sidebar li a:hover {
+	color: #F69800;
+	text-decoration: none;
+}
+
+/* 아이콘 스타일 */
+.sidebar li i {
+	margin-right: 8px;
+	width: 16px;
+	text-align: center;
+}
+
+/* 현재 페이지 활성화 스타일 - 특정 페이지별로 적용 */
+.sidebar .current-page a {
+	color: #F69800 !important;
+	font-weight: bold;
+}

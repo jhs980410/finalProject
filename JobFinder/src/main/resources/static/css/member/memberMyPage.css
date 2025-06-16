@@ -1,0 +1,33 @@
+
+/* 세로 스크롤 항상 보이게 */
+body {
+	overflow-y: scroll;
+}
+
+#containerWrap {
+	display: flex;
+	justify-content: center;
+}
+
+.main {
+	width: 1028px;
+}
+
+.content {
+	width: 900px;
+	margin: auto;
+}
+
+/* 카테고리 h1*/
+.mainTitle {
+	font-size: 32px;
+	font-weight: bold;
+	margin: 0px;
+	margin-bottom: 30px;
+}
+
+/* 내용부분. 해당 스타일 삭제해도 무방 */
+.item {
+	border: 1px solid black;
+	height: 500px;
+}
